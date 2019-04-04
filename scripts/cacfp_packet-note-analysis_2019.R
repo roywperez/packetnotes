@@ -3,7 +3,7 @@ library(tidytext)
 library(ggplot2)
 
 
-packetnotes <- read.csv("H:/2016 CACFP Packet Note Analysis/packetnotets_csv.csv", stringsAsFactors = FALSE, colClasses = c(NA,"NULL"))
+packetnotes <- read.csv("raw-data/packetnotes_csv.csv", stringsAsFactors = FALSE, colClasses = c(NA,"NULL"))
 
 data("stop_words")
 
@@ -20,14 +20,14 @@ stop_words2 <- c("tda","isd","i'm",
                  "ce","academy",
                  "cacfp",
                  "py",
-                 "september",
+                 "september","wednesday","thursday","august","tuesday","monday","october","july","march","february",
                  "email",
                  "ces","day","care", "due", "dates", "quot",
                  "txunps",
                  "date",
                  "unps","conducted",
                  "site",
-                 "tx", "houston",
+                 "tx", "houston","texas","department",
                  "corey","fatima", "burnias","cuevas"
                 )
 
