@@ -1,11 +1,11 @@
 library(tidyverse)
 library(tidytext)
-library(ggplot2)
+library(here)
+library(openxlsx)
 
 
-packetnotes <- read.csv("raw-data/packetnotes_csv.csv", stringsAsFactors = FALSE, colClasses = c(NA,"NULL"))
-
-data("stop_words")
+packetnotes <- read.csv("packetnotes/raw-data/packetnotes_csv.csv", stringsAsFactors = FALSE, colClasses = c(NA,"NULL"))
+miscwords <- scan("packetnotes/list/miscwordlist.txt",what = "list")
 
 
 packetnotes_bigrams <- packetnotes %>% 
@@ -34,10 +34,12 @@ stop_words2 <- c("tda","isd","i'm",
 bigrams_filtered <- bigrams_separated %>% 
                     filter(!word1 %in% stop_words$word,
                            !word1 %in% stop_words2,
+                           !word1 %in% miscwords,
                            !str_detect(word1, "\\_"),
                            !str_detect(word1, "[:digit:]")) %>% 
                     filter(!word2 %in% stop_words$word,
                            !word2 %in% stop_words2,
+                           !word2 %in% miscwords,
                            !str_detect(word2, "\\_"),
                            !str_detect(word2, "[:digit:]"))   
 
@@ -45,6 +47,8 @@ bigram_counts <- bigrams_filtered %>%
                 count(word1,word2, sort = TRUE)
 
 bigram_counts
+
+write.xlsx(bigram_counts,"bigcounts.xlsx")
 
 
 cleanedpacket <- packetnotes %>% 
